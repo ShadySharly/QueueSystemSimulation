@@ -14,26 +14,17 @@
 // ######################################################################################################################################################
 // ################################################################# FUNCTIONS ##########################################################################
 // ######################################################################################################################################################
-
 // - INPUTS: - argc: Numero de argumentos introducidos por consola
 //           - argv: Arreglo de punteros a caracteres correspondiente a los argumentos ingresados
-//           - cValue: Puntero que almacena la cantidad de imagenes a leer
-//           - mValue: Puntero que almacena el nombre del archivo que contiene la matriz (mascara) para la convolucion
-//           - nValue: Puntero que almacena el umbral de "negrura" para la clasificacion "nearly black"
-//           - bValue: Puntero que almacena la opcion de mostrar o no por consola los resultados obtenidos
+//           - aValue: Puntero que almacena
+//           - dValue: Puntero que almacena
+//           - tValue: Puntero que almacena
 // - OUTPUTS: -
 // - DESCRIPTION: Obtiene los valores ingresados por consola verificando la validez de cada una de las banderas (flags) y los valores
 //                por los que estan acompañadas, almacenandolas en las variables de entrada pasadas por referencia. Si no se cumplen algunas de
 //                las condiciones necesarias respetando la estructura de entrada y los tipos de datos el programa es abortado y no continua su ejecucion.
 void getParams(int argc, char **argv, char *aValue, char *dValue, char *tValue) {
   int c;
-
-  // c: Cantidad de Imagenes (int)
-  // m: Archivo con la mascara o kernel (string)
-  // n: Umbral de negrura (nearly black) (porcentaje int)
-  // b: Bandera (Mostrar resultados por pantalla (1) o no (0)) (binario)
-  // Ejecutar como:
-  //      ./pipeline -c (cValue) -m (mValue) -n (nValue) -b
 
   if ((aValue != NULL) && (dValue != NULL) && (tValue != NULL)) {
     while ((c = getopt(argc, argv, "a:d:t:")) != -1) {
@@ -128,11 +119,9 @@ int isInteger(char *input) {
   return 1;
 }
 // ######################################################################################################################################################
-// - INPUTS: - input: Cadena de caracteres a evaluar si corresponde a un numero entero positivo o no
-// - OUTPUTS: Valor booleano 1 si es entero positivo, 0 en caso contrario
-// - DESCRIPTION: Verifica si una cadena de caracteres de entrada posee en cada una de sus posiciones un caracter que es
-//                digito y es positivo
-
+// - INPUTS: -
+// - OUTPUTS:
+// - DESCRIPTION:
 Data *initData() {
   Data *newData = (Data *)malloc(sizeof(Data));
 
@@ -155,10 +144,9 @@ Data *initData() {
   }
 }
 // ######################################################################################################################################################
-// - INPUTS: - input: Cadena de caracteres a evaluar si corresponde a un numero entero positivo o no
-// - OUTPUTS: Valor booleano 1 si es entero positivo, 0 en caso contrario
-// - DESCRIPTION: Verifica si una cadena de caracteres de entrada posee en cada una de sus posiciones un caracter que es
-//                digito y es positivo
+// - INPUTS: - arrivalRate:
+// - OUTPUTS:
+// - DESCRIPTION:
 double initArrivals(double arrivalRate) {
   double u = drand48();
   double x = -(1 / arrivalRate) * log(1 - u);
@@ -166,17 +154,13 @@ double initArrivals(double arrivalRate) {
 }
 
 // ######################################################################################################################################################
-// - INPUTS: - input: Cadena de caracteres a evaluar si corresponde a un numero entero positivo o no
-// - OUTPUTS: Valor booleano 1 si es entero positivo, 0 en caso contrario
-// - DESCRIPTION: Verifica si una cadena de caracteres de entrada posee en cada una de sus posiciones un caracter que es
-//                digito y es positivo
-
+// - INPUTS: - departureRate:
+// - OUTPUTS:
+// - DESCRIPTION:
 double initDepartures(double departureRate) {
   double u = drand48();
   double x = -(1 / departureRate) * log(1 - u);
   return x;
 }
 
-// ######################################################################################################################################################
-// #################################################################### END #############################################################################
 // ######################################################################################################################################################
