@@ -12,6 +12,7 @@ MAIN_SRC = $(SRC_DIR)/main.c
 MM1_SRC = $(SRC_DIR)/mm1.c
 EXEC = mm1
 C_FLAGS = -g -Wall
+MATH_FLAG = -lm
 
 #########################################################################################################################################################
 ##################################################################### TARGETS ###########################################################################
@@ -21,11 +22,10 @@ C_FLAGS = -g -Wall
 all: $(EXEC)
 
 $(EXEC): clean obj $(MAIN_OBJ) $(MM1_OBJ)
-	$(CC) $(C_FLAGS) $(MAIN_OBJ) $(MM1_OBJ) -o $@
+	$(CC) $(C_FLAGS) $(MAIN_OBJ) $(MM1_OBJ) -o $@ $(MATH_FLAG)
 
 $(MAIN_OBJ): $(MAIN_SRC)
 	$(CC) $(C_FLAGS) -c $< -o $@
-
 
 $(MM1_OBJ): $(MM1_SRC)
 	$(CC) $(C_FLAGS) -c $< -o $@
