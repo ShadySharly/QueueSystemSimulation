@@ -5,6 +5,7 @@
 
 #include <ctype.h>
 #include <getopt.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -158,9 +159,10 @@ Data *initData() {
 // - OUTPUTS: Valor booleano 1 si es entero positivo, 0 en caso contrario
 // - DESCRIPTION: Verifica si una cadena de caracteres de entrada posee en cada una de sus posiciones un caracter que es
 //                digito y es positivo
-double *initArrivals(int arrivalRate) {
-  double *array = (double *)malloc(sizeof(double));
-  return array;
+double initArrivals(double arrivalRate) {
+  double u = drand48();
+  double x = -(1 / arrivalRate) * log(1 - u);
+  return x;
 }
 
 // ######################################################################################################################################################
@@ -169,9 +171,10 @@ double *initArrivals(int arrivalRate) {
 // - DESCRIPTION: Verifica si una cadena de caracteres de entrada posee en cada una de sus posiciones un caracter que es
 //                digito y es positivo
 
-double *initDepartures(int departureRate) {
-  double *array = (double *)malloc(sizeof(double));
-  return array;
+double initDepartures(double departureRate) {
+  double u = drand48();
+  double x = -(1 / departureRate) * log(1 - u);
+  return x;
 }
 
 // ######################################################################################################################################################

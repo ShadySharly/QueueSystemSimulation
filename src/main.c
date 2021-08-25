@@ -1,11 +1,11 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////// DIRECTIVES /////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <math.h>
 
 #include "mm1.h"
 #include "structs.h"
@@ -21,17 +21,17 @@ int main(int argc, char** argv) {
   char* aValue = (char*)malloc(sizeof(char));
   char* dValue = (char*)malloc(sizeof(char));
   char* tValue = (char*)malloc(sizeof(char));
+  double aRate, dRate, endTime, newArrival, newDeparture;
   Data* data = initData();
 
   getParams(argc, argv, aValue, dValue, tValue);
 
-  for(int i = 0; i < 10; i++) {
-    double a = drand48();
-    double e = -(1 / atof(aValue)) * log(1 - a);
-    printf("%f\n", e);
+  aRate = atof(aValue);
+  dRate = atof(dValue);
+  endTime = atof(tValue);
 
-  }
-
+  newArrival = initArrivals(aRate);
+  newDeparture = initDepartures(dRate);
 
   return 0;
 }
