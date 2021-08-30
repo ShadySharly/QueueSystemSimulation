@@ -19,8 +19,8 @@ int main(int argc, char** argv) {
   char* aValue = (char*)malloc(sizeof(char));
   char* dValue = (char*)malloc(sizeof(char));
   char* tValue = (char*)malloc(sizeof(char));
-  double aRate, dRate, endTime, newArrival, newDeparture;
-  Data* data = initData();
+  double aRate, dRate, endTime;
+  //Data* data = initData();
 
   getParams(argc, argv, aValue, dValue, tValue);
 
@@ -28,8 +28,6 @@ int main(int argc, char** argv) {
   dRate = atof(dValue);
   endTime = atof(tValue);
 
-  newArrival = initArrivals(aRate);
-  newDeparture = initDepartures(dRate);
   simulate(aRate, dRate, endTime);
 
   return 0;

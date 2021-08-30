@@ -41,7 +41,7 @@ void getParams(int argc, char **argv, char *aValue, char *dValue, char *tValue) 
             exit(EXIT_FAILURE);
           }
 
-          printf(" => Tasa de arribos (-a): %d\n", atoi(aValue));
+          //printf(" => Tasa de arribos (-a): %d\n", atoi(aValue));
           break;
 
         case 'd':
@@ -55,7 +55,7 @@ void getParams(int argc, char **argv, char *aValue, char *dValue, char *tValue) 
             exit(EXIT_FAILURE);
           }
 
-          printf(" => Tasa de despachos (-d): %d\n", atoi(dValue));
+          //printf(" => Tasa de despachos (-d): %d\n", atoi(dValue));
           break;
 
         case 't':
@@ -69,7 +69,7 @@ void getParams(int argc, char **argv, char *aValue, char *dValue, char *tValue) 
             exit(EXIT_FAILURE);
           }
 
-          printf(" => Tiempo de salida (-t): %d\n", atoi(tValue));
+          //printf(" => Tiempo de salida (-t): %d\n", atoi(tValue));
           break;
 
         case '?':
@@ -172,8 +172,8 @@ double initDepartures(double departureRate) {
 // - INPUTS: - departureRate:
 // - OUTPUTS:
 // - DESCRIPTION:
-double* push(int len, double* array, double element) {
-  double* newArray = (double*)malloc(sizeof(double) * len + 1);
+double *push(int len, double *array, double element) {
+  double *newArray = (double *)malloc(sizeof(double) * len + 1);
   int i = 0;
   for (i = 0; i < len; i++) {
     newArray[i] = array[i];
@@ -191,9 +191,9 @@ void simulate(double aRate, double dRate, double endTime) {
   // Declaraciones
   double timeActual = initArrivals(aRate);  //tiempo actual es el tiempo en que llego el primero
   double departureActual = initDepartures(dRate);
-  double* arrivalArray = (double*)malloc(sizeof(double));
+  double *arrivalArray = (double *)malloc(sizeof(double));
   int lenArrival = 1;
-  double* departureArray = (double*)malloc(sizeof(double));
+  double *departureArray = (double *)malloc(sizeof(double));
   int lenDeparture = 1;
   arrivalArray[lenArrival - 1] = timeActual;
   departureArray[lenDeparture - 1] = departureActual + timeActual;
@@ -202,13 +202,11 @@ void simulate(double aRate, double dRate, double endTime) {
   int posActual = 0;
   int maximo = 0;
   double timeArrive, timeDeparture;
-  int i = 0;
   int salieron = 0;
   while (timeActual < endTime) {  // mientas el tiempo actual sea menor quenel tiempo de termino se sigue
     arriveAux = initArrivals(aRate);
     departureAux = initDepartures(dRate);
-    if (timeArrive < endTime) {  // si el tiempo en que llego es despues del endtime entonces no se agrega a la cola
-      i += 1;
+    if (timeArrive < endTime) {             // si el tiempo en que llego es despues del endtime entonces no se agrega a la cola
       timeArrive = timeActual + arriveAux;  // arrivo es actual mas el arrive aux , seria el como que despues de cuanto tiempo lleo el otro desde el segundo cero
       arrivalArray = push(lenArrival, arrivalArray, timeArrive);
       lenArrival += 1;
@@ -228,8 +226,11 @@ void simulate(double aRate, double dRate, double endTime) {
     }
   }
 
-  printf("\n-------------------------RESULTADOS------------------------------------------\n");
-  printf("Numero de cliente que llegaron=%i\nNumero de clientes que salieron=%i\nTiempo Total de cola vacia=%f\nLargo maximo de la cola=%i\nTiempo total de cola largo maximo=%f\nUtilizacion=%f\nLargo promedio de la cola=%f,Tiempo promedio de residencia=%f\n", lenArrival, salieron, timeActual, maximo, timeActual, timeActual, timeActual, timeActual);
+  printf("%s\n", "--------------------------- RESULTADOS ----------------------------------");
+  printf(" => Numero de clientes que llegaron: %i\n", lenArrival);
+  printf(" => Numero de clientes que salieron: %i\n", salieron);
+  printf(" => Largo maximo de la cola: %i\n", maximo);
+  printf("%s\n", "-------------------------------------------------------------------------");
   free(arrivalArray);
   free(departureArray);
 }
