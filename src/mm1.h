@@ -16,6 +16,10 @@ int isInteger(char* input);
 
 Data* initData();
 
+void simulate(double aRate, double dRate, double endTime);
+
+double* push(int len, double* array, double element);
+
 double initArrivals(double arrivalRate);
 
 double initDepartures(double departureRate);

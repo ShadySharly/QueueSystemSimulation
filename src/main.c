@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 
 #include "mm1.h"
 #include "structs.h"
@@ -31,6 +30,7 @@ int main(int argc, char** argv) {
 
   newArrival = initArrivals(aRate);
   newDeparture = initDepartures(dRate);
+  simulate(aRate, dRate, endTime);
 
   return 0;
 }

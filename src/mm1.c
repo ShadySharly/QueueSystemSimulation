@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <unistd.h>
 
 // ######################################################################################################################################################
@@ -148,6 +149,8 @@ Data *initData() {
 // - OUTPUTS:
 // - DESCRIPTION:
 double initArrivals(double arrivalRate) {
+  time_t t;
+  srand48((unsigned)time(&t));
   double u = drand48();
   double x = -(1 / arrivalRate) * log(1 - u);
   return x;
@@ -158,9 +161,77 @@ double initArrivals(double arrivalRate) {
 // - OUTPUTS:
 // - DESCRIPTION:
 double initDepartures(double departureRate) {
+  time_t t;
+  srand48((unsigned)time(&t));
   double u = drand48();
   double x = -(1 / departureRate) * log(1 - u);
   return x;
+}
+
+// ######################################################################################################################################################
+// - INPUTS: - departureRate:
+// - OUTPUTS:
+// - DESCRIPTION:
+double* push(int len, double* array, double element) {
+  double* newArray = (double*)malloc(sizeof(double) * len + 1);
+  int i = 0;
+  for (i = 0; i < len; i++) {
+    newArray[i] = array[i];
+  }
+  newArray[i] = element;
+  free(array);
+  return newArray;
+}
+
+// ######################################################################################################################################################
+// - INPUTS: - departureRate:
+// - OUTPUTS:
+// - DESCRIPTION:
+void simulate(double aRate, double dRate, double endTime) {
+  // Declaraciones
+  double timeActual = initArrivals(aRate);  //tiempo actual es el tiempo en que llego el primero
+  double departureActual = initDepartures(dRate);
+  double* arrivalArray = (double*)malloc(sizeof(double));
+  int lenArrival = 1;
+  double* departureArray = (double*)malloc(sizeof(double));
+  int lenDeparture = 1;
+  arrivalArray[lenArrival - 1] = timeActual;
+  departureArray[lenDeparture - 1] = departureActual + timeActual;
+  double arriveAux;
+  double departureAux;
+  int posActual = 0;
+  int maximo = 0;
+  double timeArrive, timeDeparture;
+  int i = 0;
+  int salieron = 0;
+  while (timeActual < endTime) {  // mientas el tiempo actual sea menor quenel tiempo de termino se sigue
+    arriveAux = initArrivals(aRate);
+    departureAux = initDepartures(dRate);
+    if (timeArrive < endTime) {  // si el tiempo en que llego es despues del endtime entonces no se agrega a la cola
+      i += 1;
+      timeArrive = timeActual + arriveAux;  // arrivo es actual mas el arrive aux , seria el como que despues de cuanto tiempo lleo el otro desde el segundo cero
+      arrivalArray = push(lenArrival, arrivalArray, timeArrive);
+      lenArrival += 1;
+      timeDeparture = timeActual + arriveAux + departureAux;  // aqui es lo mismo pero seria en cuanto tiempo salio desde el segundo cero
+      departureArray = push(lenDeparture, departureArray, timeDeparture);
+      lenDeparture += 1;
+    }
+    if (maximo < lenArrival + 1 - posActual) {  //Esto es para saber el maximo de la cola, seria como si el largo = 6 y pos actual 3, entonces 3 quedarian en la cola
+      maximo = lenArrival + 1 - posActual;
+    }
+    if (timeArrive > departureArray[posActual]) {  //si el tiempo de arivo del que llego es mmayor que la salida de otro entonces se pasa al siguiente, y se sigue viendo se pueden agregar mas a la cola
+      posActual += 1;
+      salieron += 1;
+      timeActual += arrivalArray[posActual];
+    } else {  // si el tiempo de arrivo es menor, entonces tomamos ese tiempo, ya que llego uno
+      timeActual = timeArrive;
+    }
+  }
+
+  printf("\n-------------------------RESULTADOS------------------------------------------\n");
+  printf("Numero de cliente que llegaron=%i\nNumero de clientes que salieron=%i\nTiempo Total de cola vacia=%f\nLargo maximo de la cola=%i\nTiempo total de cola largo maximo=%f\nUtilizacion=%f\nLargo promedio de la cola=%f,Tiempo promedio de residencia=%f\n", lenArrival, salieron, timeActual, maximo, timeActual, timeActual, timeActual, timeActual);
+  free(arrivalArray);
+  free(departureArray);
 }
 
 // ######################################################################################################################################################
